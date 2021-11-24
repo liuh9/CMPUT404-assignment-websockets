@@ -127,7 +127,7 @@ function addEntity(entity, data) {
     //XXX: Send a XHTML Request that updates the entity you just modified!
     var content = {};
     content[entity] = data;
-    socket.send(JSON.stringify(packet));
+    socket.send(JSON.stringify(content));
 }
 var counter = 0;
 function addEntityWithoutName(data) {
@@ -253,7 +253,8 @@ function update() {
 
 
 function wsSetup() {
-    var url = "ws://"+host+"/subscribe";   
+    var url = "ws://"+host+"/subscribe"; 
+    // console.log(url);  
     socket = new WebSocket(url);
     socket.onopen = function() {
         //XXX: TODO What are you going to do here?

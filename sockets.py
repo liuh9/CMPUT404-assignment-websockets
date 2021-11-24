@@ -75,6 +75,7 @@ myWorld = World()
 
 def set_listener( entity, data ):
     ''' do something with the update ! '''
+    global clients
     for client in clients:
         client.put(json.dumps({entity: data}))
 
@@ -88,6 +89,7 @@ def hello():
 def read_ws(ws,client):
     '''A greenlet function that reads from the websocket and updates the world'''
     # XXX: TODO IMPLEMENT ME
+    global clients
     try:
         while True:
             msg = ws.receive()
@@ -105,6 +107,7 @@ def subscribe_socket(ws):
     '''Fufill the websocket URL of /subscribe, every update notify the
        websocket and read updates from the websocket '''
     # XXX: TODO IMPLEMENT ME
+    global clients
     client = Client()
     clients.append(client)
     gt = gevent.spawn(read_ws, ws, client)
@@ -117,7 +120,7 @@ def subscribe_socket(ws):
     finally:
         clients.remove(client)
         gevent.kill(gt)
-        print("eeeeeee-----")
+        # print("eeeeeee-----")
 
 
 # I give this to you, this is how you get the raw body/data portion of a post in flask
